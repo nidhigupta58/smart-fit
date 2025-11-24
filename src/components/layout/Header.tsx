@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
-import { ShoppingCart, Heart, User, Search } from 'lucide-react';
+import { ShoppingCart, Heart, User } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
-import { Badge } from '@/components/ui/Badge';
 import { useCartStore } from '@/store/useCartStore';
 import { useWishlistStore } from '@/store/useWishlistStore';
 import { useFitProfileStore } from '@/store/useFitProfileStore';
