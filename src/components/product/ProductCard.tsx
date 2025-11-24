@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
-import { ShoppingCart, Heart, Star } from 'lucide-react';
+import { Heart, Star } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import type { Product } from '@/types';
 import { formatCurrency } from '@/lib/utils';
