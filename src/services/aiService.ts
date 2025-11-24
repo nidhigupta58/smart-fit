@@ -18,7 +18,7 @@ function getSizeFromMeasurements(
     product: Product
 ): Size {
     const bmi = calculateBMI(measurements.height, measurements.weight);
-    const { bodyType, fitPreference, gender } = measurements;
+    const { bodyType, fitPreference } = measurements;
 
     // Base size determination from BMI
     let baseSize: Size;
@@ -92,8 +92,7 @@ function getSizeSmaller(size: Size): Size {
 }
 
 function getFitResult(
-    measurements: UserMeasurements,
-    recommendedSize: Size
+    measurements: UserMeasurements
 ): FitResult {
     const { fitPreference } = measurements;
 
@@ -135,7 +134,7 @@ export async function getSizeRecommendation(
     await new Promise(resolve => setTimeout(resolve, 800));
 
     const recommendedSize = getSizeFromMeasurements(measurements, product);
-    const fitResult = getFitResult(measurements, recommendedSize);
+    const fitResult = getFitResult(measurements);
     const fitScore = getFitScore(fitResult);
 
     // Generate advice based on measurements and product
