@@ -9,7 +9,7 @@ export type BodyType =
 
 export type FitPreference = 'slim' | 'regular' | 'relaxed' | 'oversized';
 
-export type Size = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL';
+export type Size = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL' | 'One Size' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '28' | '30' | '32' | '34' | '36' | '38';
 
 export type FitResult = 'tight' | 'perfect' | 'loose' | 'slightly tight' | 'slightly loose';
 
@@ -24,7 +24,10 @@ export type Category =
     | 'hoodies'
     | 'dresses'
     | 'activewear'
-    | 'sweaters';
+    | 'sweaters'
+    | 'shoes'
+    | 'accessories'
+    | 'skirts';
 
 export interface UserMeasurements {
     height: number; // in cm
