@@ -9,7 +9,7 @@ export type BodyType =
 
 export type FitPreference = 'slim' | 'regular' | 'relaxed' | 'oversized';
 
-export type Size = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL' | 'One Size' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '28' | '30' | '32' | '34' | '36' | '38';
+export type Size = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL' | 'One Size' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | '28' | '30' | '32' | '34' | '36' | '38' | '20mm' | '22mm';
 
 export type FitResult = 'tight' | 'perfect' | 'loose' | 'slightly tight' | 'slightly loose';
 
