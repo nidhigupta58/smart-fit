@@ -6,13 +6,21 @@ import type { Category, Gender } from '@/types';
 export function ShopPage() {
   const [selectedCategory, setSelectedCategory] = useState<Category | 'all'>('all');
   const [selectedGender, setSelectedGender] = useState<Gender | 'all'>('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [priceRange, setPriceRange] = useState({ min: 0, max: 10000 });
 
   const filteredProducts = mockProducts.filter((product) => {
     const categoryMatch =
       selectedCategory === 'all' || product.category === selectedCategory;
     const genderMatch =
       selectedGender === 'all' || product.gender === selectedGender || product.gender === 'unisex';
-    return categoryMatch && genderMatch;
+    const searchMatch =
+      product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      product.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const priceMatch =
+      product.price >= priceRange.min && product.price <= priceRange.max;
+
+    return categoryMatch && genderMatch && searchMatch && priceMatch;
   });
 
   return (
@@ -29,7 +37,40 @@ export function ShopPage() {
         </div>
 
         {/* Filters */}
-        <div className="mb-8 space-y-4">
+        <div className="mb-8 space-y-6">
+          {/* Search Bar */}
+          <div>
+             <label className="block text-sm font-medium text-gray-700 mb-2">
+              Search
+            </label>
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full md:w-1/2 p-2 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+            />
+          </div>
+
+          <div className="flex flex-col md:flex-row gap-6"> 
+             {/* Price Range Filter */}
+            <div className="w-full md:w-1/3">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Price Range: ₹{priceRange.min} - ₹{priceRange.max}
+              </label>
+              <div className="flex items-center gap-4">
+                <input
+                  type="range"
+                  min="0"
+                  max="10000"
+                  step="100"
+                  value={priceRange.max}
+                  onChange={(e) => setPriceRange(prev => ({ ...prev, max: Number(e.target.value) }))}
+                   className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                />
+              </div>
+            </div>
+          </div>
           {/* Gender Filter */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -58,7 +99,7 @@ export function ShopPage() {
               Category
             </label>
             <div className="flex flex-wrap gap-2">
-              {['all', 'shirts', 't-shirts', 'jeans', 'pants', 'jackets', 'hoodies', 'dresses', 'activewear'].map(
+              {['all', 'shirts', 't-shirts', 'jeans', 'pants', 'jackets', 'hoodies', 'dresses', 'activewear', 'sweaters', 'shoes', 'accessories', 'skirts'].map(
                 (category) => (
                   <button
                     key={category}
