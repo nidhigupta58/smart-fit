@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Search, SlidersHorizontal, Sparkles } from 'lucide-react';
 import { ProductCard } from '@/components/product/ProductCard';
 import { mockProducts } from '@/data/mockProducts';
 import type { Category, Gender } from '@/types';
@@ -23,68 +24,80 @@ export function ShopPage() {
     return categoryMatch && genderMatch && searchMatch && priceMatch;
   });
 
+  const categories = ['all', 'shirts', 't-shirts', 'jeans', 'pants', 'jackets', 'hoodies', 'dresses', 'activewear', 'sweaters', 'shoes', 'accessories', 'skirts'];
+  const genders = ['all', 'men', 'women', 'unisex'];
+
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="container mx-auto px-4">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50/50 to-white relative">
+      {/* Background accent */}
+      <div className="absolute top-0 left-0 right-0 h-96 bg-gradient-to-br from-primary-50 via-white to-accent-50 -z-10" />
+      
+      <div className="container mx-auto px-4 py-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="font-display font-bold text-4xl text-gray-900 mb-2">
+        <div className="mb-10">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-primary-500 to-accent-500 flex items-center justify-center shadow-glow-sm">
+              <Sparkles className="w-5 h-5 text-white" />
+            </div>
+            <span className="px-3 py-1 rounded-full bg-primary-100 text-primary-700 text-xs font-semibold">
+              {filteredProducts.length} Products
+            </span>
+          </div>
+          <h1 className="font-display font-bold text-4xl md:text-5xl bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent mb-3">
             Shop All Products
           </h1>
-          <p className="text-gray-600">
-            {filteredProducts.length} products available
+          <p className="text-gray-600 text-lg">
+            Discover your perfect style with AI-powered size recommendations
           </p>
         </div>
 
         {/* Filters */}
-        <div className="mb-8 space-y-6">
+        <div className="mb-10 space-y-6 p-6 rounded-3xl bg-white/80 backdrop-blur-sm border border-white/60 shadow-lg">
           {/* Search Bar */}
-          <div>
-             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Search
-            </label>
+          <div className="relative">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
             <input
               type="text"
               placeholder="Search products..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full md:w-1/2 p-2 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+              className="w-full md:w-1/2 pl-12 pr-4 py-3.5 rounded-xl border-2 border-gray-200 bg-white/80 focus:border-primary-400 focus:ring-4 focus:ring-primary-100 transition-all duration-300 text-gray-900 placeholder:text-gray-400"
             />
           </div>
 
-          <div className="flex flex-col md:flex-row gap-6"> 
-             {/* Price Range Filter */}
-            <div className="w-full md:w-1/3">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Price Range: ₹{priceRange.min} - ₹{priceRange.max}
+          <div className="flex flex-col lg:flex-row gap-6">
+            {/* Price Range Filter */}
+            <div className="lg:w-1/3">
+              <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-3">
+                <SlidersHorizontal className="w-4 h-4" />
+                Price Range: <span className="text-primary-600">₹{priceRange.min} - ₹{priceRange.max}</span>
               </label>
-              <div className="flex items-center gap-4">
-                <input
-                  type="range"
-                  min="0"
-                  max="10000"
-                  step="100"
-                  value={priceRange.max}
-                  onChange={(e) => setPriceRange(prev => ({ ...prev, max: Number(e.target.value) }))}
-                   className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-                />
-              </div>
+              <input
+                type="range"
+                min="0"
+                max="10000"
+                step="100"
+                value={priceRange.max}
+                onChange={(e) => setPriceRange(prev => ({ ...prev, max: Number(e.target.value) }))}
+                className="w-full h-2 bg-gradient-to-r from-primary-200 to-accent-200 rounded-lg appearance-none cursor-pointer accent-primary-500"
+              />
             </div>
           </div>
+
           {/* Gender Filter */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-semibold text-gray-700 mb-3">
               Gender
             </label>
             <div className="flex flex-wrap gap-2">
-              {['all', 'men', 'women', 'unisex'].map((gender) => (
+              {genders.map((gender) => (
                 <button
                   key={gender}
                   onClick={() => setSelectedGender(gender as Gender | 'all')}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-smooth ${
+                  className={`filter-btn ${
                     selectedGender === gender
-                      ? 'bg-primary-500 text-white'
-                      : 'bg-white text-gray-700 hover:bg-gray-100'
+                      ? 'filter-btn-active'
+                      : 'filter-btn-inactive'
                   }`}
                 >
                   {gender.charAt(0).toUpperCase() + gender.slice(1)}
@@ -95,39 +108,41 @@ export function ShopPage() {
 
           {/* Category Filter */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-semibold text-gray-700 mb-3">
               Category
             </label>
             <div className="flex flex-wrap gap-2">
-              {['all', 'shirts', 't-shirts', 'jeans', 'pants', 'jackets', 'hoodies', 'dresses', 'activewear', 'sweaters', 'shoes', 'accessories', 'skirts'].map(
-                (category) => (
-                  <button
-                    key={category}
-                    onClick={() => setSelectedCategory(category as Category | 'all')}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-smooth ${
-                      selectedCategory === category
-                        ? 'bg-primary-500 text-white'
-                        : 'bg-white text-gray-700 hover:bg-gray-100'
-                    }`}
-                  >
-                    {category.charAt(0).toUpperCase() + category.slice(1).replace('-', ' ')}
-                  </button>
-                )
-              )}
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category as Category | 'all')}
+                  className={`filter-btn ${
+                    selectedCategory === category
+                      ? 'filter-btn-active'
+                      : 'filter-btn-inactive'
+                  }`}
+                >
+                  {category.charAt(0).toUpperCase() + category.slice(1).replace('-', ' ')}
+                </button>
+              ))}
             </div>
           </div>
         </div>
 
         {/* Products Grid */}
         {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {filteredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
         ) : (
-          <div className="text-center py-20">
-            <p className="text-gray-500 text-lg">No products found</p>
+          <div className="text-center py-24">
+            <div className="w-24 h-24 rounded-full bg-gray-100 mx-auto mb-6 flex items-center justify-center">
+              <Search className="w-10 h-10 text-gray-300" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-700 mb-2">No products found</h3>
+            <p className="text-gray-500">Try adjusting your filters or search query</p>
           </div>
         )}
       </div>
