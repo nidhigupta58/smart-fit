@@ -619,7 +619,7 @@ export const mockProducts: Product[] = [
         name: 'Winter Puffer Jacket',
         description: 'Insulated puffer jacket with water-resistant shell. Warm and lightweight for cold weather.',
         price: 4999,
-        images: ['https://images.unsplash.com/photo-1548126032-079ed77e79c4?w=400'],
+        images: ['https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=400'],
         category: 'jackets',
         gender: 'unisex',
         sizes: ['S', 'M', 'L', 'XL', 'XXL'],
