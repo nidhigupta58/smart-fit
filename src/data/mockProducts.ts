@@ -997,7 +997,7 @@ export const mockProducts: Product[] = [
         name: 'Running Windbreaker',
         description: 'Ultra-lightweight windbreaker for running. Reflective details for safety at night.',
         price: 2599,
-        images: ['https://images.unsplash.com/photo-1551854838-234955b23e6b?w=400'],
+        images: ["/products/image.png"],
         category: 'activewear',
         gender: 'men',
         sizes: ['S', 'M', 'L', 'XL'],
