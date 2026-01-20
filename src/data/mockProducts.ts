@@ -1,4 +1,4 @@
-import type { Product } from '@/types';
+import type { Product, Gender } from '@/types';
 
 export const mockProducts: Product[] = [
     {
@@ -1107,4 +1107,13 @@ export function getNewArrivals(): Product[] {
 // Helper function to get product by ID
 export function getProductById(id: string): Product | undefined {
     return mockProducts.find(p => p.id === id);
+}
+
+// Helper function to find equivalent products (same category, different gender)
+export function getEquivalentProductsByGender(product: Product, targetGender: Gender): Product[] {
+    return mockProducts.filter(p => 
+        p.id !== product.id &&
+        p.category === product.category &&
+        p.gender === targetGender
+    );
 }
