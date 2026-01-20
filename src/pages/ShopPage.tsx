@@ -1,14 +1,28 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Search, SlidersHorizontal, Sparkles } from 'lucide-react';
 import { ProductCard } from '@/components/product/ProductCard';
 import { mockProducts } from '@/data/mockProducts';
 import type { Category, Gender } from '@/types';
 
 export function ShopPage() {
-  const [selectedCategory, setSelectedCategory] = useState<Category | 'all'>('all');
-  const [selectedGender, setSelectedGender] = useState<Gender | 'all'>('all');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [selectedCategory, setSelectedCategory] = useState<Category | 'all'>(
+    (searchParams.get('category') as Category) || 'all'
+  );
+  const [selectedGender, setSelectedGender] = useState<Gender | 'all'>(
+    (searchParams.get('gender') as Gender) || 'all'
+  );
   const [searchQuery, setSearchQuery] = useState('');
   const [priceRange, setPriceRange] = useState({ min: 0, max: 10000 });
+
+  // Update URL params when filters change
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (selectedCategory !== 'all') params.set('category', selectedCategory);
+    if (selectedGender !== 'all') params.set('gender', selectedGender);
+    setSearchParams(params, { replace: true });
+  }, [selectedCategory, selectedGender, setSearchParams]);
 
   const filteredProducts = mockProducts.filter((product) => {
     const categoryMatch =
