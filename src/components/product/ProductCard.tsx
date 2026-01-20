@@ -53,6 +53,13 @@ export function ProductCard({ product, recommendedSize }: ProductCardProps) {
                 {recommendedSize} - Recommended ⭐
               </Badge>
             )}
+            {profile?.gender && 
+             product.gender !== 'unisex' && 
+             profile.gender !== product.gender && (
+              <Badge variant="warning" size="sm" className="shadow-lg backdrop-blur-sm">
+                {product.gender === 'women' ? "Women's" : "Men's"} sizing
+              </Badge>
+            )}
           </div>
 
           {/* Wishlist Button */}
