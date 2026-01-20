@@ -4,6 +4,8 @@
 
 Smart Fit is a premium React e-commerce application that solves the online clothing fit problem using AI-powered size recommendations. Get personalized size suggestions based on your measurements, body type, and fit preferences.
 
+![Smart Fit](image.png)
+
 ```mermaid
 flowchart TD
   A[User Inputs Measurements] --> B[Select Body Type]
