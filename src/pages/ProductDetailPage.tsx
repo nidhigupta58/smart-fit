@@ -6,13 +6,13 @@ import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Modal } from '@/components/ui/Modal';
 import { FitIndicator } from '@/components/fit/FitIndicator';
-import { getProductById, getEquivalentProductsByGender } from '@/data/mockProducts';
+import { getProductById } from '@/data/mockProducts';
 import { formatCurrency } from '@/lib/utils';
 import { useCartStore } from '@/store/useCartStore';
 import { useWishlistStore } from '@/store/useWishlistStore';
 import { useFitProfileStore } from '@/store/useFitProfileStore';
 import { getSizeRecommendation } from '@/services/aiService';
-import type { Size, SizeRecommendation, Gender } from '@/types';
+import type { Size, SizeRecommendation } from '@/types';
 
 export function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
