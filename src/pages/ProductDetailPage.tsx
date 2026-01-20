@@ -6,13 +6,13 @@ import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Modal } from '@/components/ui/Modal';
 import { FitIndicator } from '@/components/fit/FitIndicator';
-import { getProductById } from '@/data/mockProducts';
+import { getProductById, getEquivalentProductsByGender } from '@/data/mockProducts';
 import { formatCurrency } from '@/lib/utils';
 import { useCartStore } from '@/store/useCartStore';
 import { useWishlistStore } from '@/store/useWishlistStore';
 import { useFitProfileStore } from '@/store/useFitProfileStore';
 import { getSizeRecommendation } from '@/services/aiService';
-import type { Size, SizeRecommendation } from '@/types';
+import type { Size, SizeRecommendation, Gender } from '@/types';
 
 export function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -140,6 +140,36 @@ export function ProductDetailPage() {
             <p className="text-gray-600 text-lg leading-relaxed">
               {product.description}
             </p>
+
+            {/* Gender Mismatch Recommendation */}
+            {profile?.gender && 
+             product.gender !== 'unisex' && 
+             profile.gender !== product.gender && (
+              <Card className="bg-gradient-to-r from-amber-50 to-orange-50 border-amber-200">
+                <div className="p-4 flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 flex items-center justify-center flex-shrink-0">
+                    <Sparkles className="w-4 h-4 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-gray-900 mb-1">
+                      This item is in {product.gender === 'women' ? "Women's" : "Men's"} sizing.
+                    </p>
+                    <p className="text-sm text-gray-700 mb-3">
+                      Want the {profile.gender === 'men' ? "Men's" : "Women's"} equivalent?
+                    </p>
+                    <Link to={`/shop?gender=${profile.gender}&category=${product.category}`}>
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        className="text-xs"
+                      >
+                        Shop {profile.gender === 'men' ? "Men's" : "Women's"} {product.category}
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </Card>
+            )}
 
             {/* Get AI Recommendation Button */}
             {profile ? (
