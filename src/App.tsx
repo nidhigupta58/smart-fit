@@ -6,6 +6,7 @@ import { ShopPage } from './pages/ShopPage';
 import { ProductDetailPage } from './pages/ProductDetailPage';
 import { FitProfilePage } from './pages/FitProfilePage';
 import { CartPage } from './pages/CartPage';
+import { WishlistPage } from './pages/WishlistPage';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/product/:id" element={<ProductDetailPage />} />
             <Route path="/fit-profile" element={<FitProfilePage />} />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/wishlist" element={<WishlistPage />} />
           </Routes>
         </main>
         <Footer />
